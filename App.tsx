@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -12,10 +12,11 @@ import {
   TextInput,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import Octicons from 'react-native-vector-icons/Octicons';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -79,7 +80,9 @@ function App(): React.JSX.Element {
 
   const fetchChatData = async () => {
     try {
-      const response = await fetch('https://qa.corider.in/assignment/chat?page=0');
+      const response = await fetch(
+        'https://qa.corider.in/assignment/chat?page=0',
+      );
       const data = await response.json();
       setChatData(data);
     } catch (error) {
@@ -102,7 +105,11 @@ function App(): React.JSX.Element {
         <Text style={styles.headerTitle}>Trip 1</Text>
       </View>
       <TouchableOpacity>
-        <MaterialCommunityIcons name="square-edit-outline" size={24} color="#000" />
+        <MaterialCommunityIcons
+          name="square-edit-outline"
+          size={24}
+          color="#000"
+        />
       </TouchableOpacity>
     </View>
   );
@@ -112,7 +119,9 @@ function App(): React.JSX.Element {
       <View style={styles.tripHeader}>
         <View style={styles.groupImageContainer}>
           <Image
-            source={{ uri: 'https://images.unsplash.com/photo-1569617084133-26942bb441f2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}
+            source={{
+              uri: 'https://images.unsplash.com/photo-1569617084133-26942bb441f2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            }}
             style={styles.groupImage}
           />
         </View>
@@ -139,21 +148,28 @@ function App(): React.JSX.Element {
 
   const renderMessage = ({item}: {item: Chat}) => (
     <>
-      <View style={[
-        styles.messageContainer,
-        item.sender.self ? styles.selfMessage : styles.otherMessage
-      ]}>
+      <View
+        style={[
+          styles.messageContainer,
+          item.sender.self ? styles.selfMessage : styles.otherMessage,
+        ]}>
         {!item.sender.self && (
           <Image source={{uri: item.sender.image}} style={styles.avatar} />
         )}
-        <View style={[
-          styles.messageContent,
-          item.sender.self ? styles.selfMessageContent : styles.otherMessageContent
-        ]}>
-          <Text style={[
-            styles.messageText,
-            item.sender.self && styles.selfMessageText
-          ]}>{item.message}</Text>
+        <View
+          style={[
+            styles.messageContent,
+            item.sender.self
+              ? styles.selfMessageContent
+              : styles.otherMessageContent,
+          ]}>
+          <Text
+            style={[
+              styles.messageText,
+              item.sender.self && styles.selfMessageText,
+            ]}>
+            {item.message}
+          </Text>
         </View>
       </View>
     </>
@@ -164,8 +180,7 @@ function App(): React.JSX.Element {
       <TouchableOpacity
         activeOpacity={1}
         onPress={handleOutsideClick}
-        style={styles.headerContainer}
-      >
+        style={styles.headerContainer}>
         {renderHeader()}
         {renderTripInfo()}
       </TouchableOpacity>
@@ -191,8 +206,10 @@ function App(): React.JSX.Element {
             placeholder="Reply to @Rohit Yadav"
             placeholderTextColor="#666"
           />
-          <TouchableOpacity onPress={() => setShowAttachmentMenu(!showAttachmentMenu)}>
-            <MaterialCommunityIcons name="paperclip" size={24} color="#666" />
+          <TouchableOpacity
+            style={styles.attachmentIcon}
+            onPress={() => setShowAttachmentMenu(!showAttachmentMenu)}>
+            <Feather name="paperclip" size={24} color="#666" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sendButton}>
             <MaterialCommunityIcons name="send" size={24} color="#666" />
@@ -202,20 +219,22 @@ function App(): React.JSX.Element {
 
       {showMenu && (
         <TouchableOpacity
-          style={[styles.menuOverlay, { position: 'absolute' }]}
+          style={[styles.menuOverlay, {position: 'absolute'}]}
           activeOpacity={1}
           onPress={() => setShowMenu(false)}>
           <View style={styles.menuContent}>
             <TouchableOpacity style={styles.menuItem}>
-              <MaterialCommunityIcons name="account-group-outline" size={24} color="#000" />
+              <MaterialIcons name="people-outline" size={24} color="#000" />
               <Text style={styles.menuItemText}>Members</Text>
             </TouchableOpacity>
+            <View style={styles.menuSeparator} />
             <TouchableOpacity style={styles.menuItem}>
-              <MaterialCommunityIcons name="phone-outline" size={24} color="#000" />
+              <Feather name="phone" size={24} color="#000" />
               <Text style={styles.menuItemText}>Share Number</Text>
             </TouchableOpacity>
+            <View style={styles.menuSeparator} />
             <TouchableOpacity style={styles.menuItem}>
-              <MaterialCommunityIcons name="flag-outline" size={24} color="#000" />
+              <Octicons name="report" size={24} color="#000" />
               <Text style={styles.menuItemText}>Report</Text>
             </TouchableOpacity>
           </View>
@@ -226,23 +245,34 @@ function App(): React.JSX.Element {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.attachmentMenuOverlay}
-          onPress={() => setShowAttachmentMenu(false)}
-        >
+          onPress={() => setShowAttachmentMenu(false)}>
           <TouchableOpacity
             activeOpacity={1}
-            onPress={(e) => e.stopPropagation()}
-            style={styles.attachmentMenu}
-          >
+            onPress={e => e.stopPropagation()}
+            style={styles.attachmentMenu}>
             <View style={styles.attachmentBubble}>
               <TouchableOpacity style={styles.attachmentIcon}>
-                <MaterialCommunityIcons name="camera-outline" size={24} color="#fff" />
+                <MaterialCommunityIcons
+                  name="camera-outline"
+                  size={24}
+                  color="#fff"
+                />
               </TouchableOpacity>
               <TouchableOpacity style={styles.attachmentIcon}>
-                <MaterialCommunityIcons name="video-outline" size={24} color="#fff" />
+                <MaterialCommunityIcons
+                  name="video-outline"
+                  size={24}
+                  color="#fff"
+                />
               </TouchableOpacity>
               <TouchableOpacity style={styles.attachmentIcon}>
-                <MaterialCommunityIcons name="file-download-outline" size={24} color="#fff" />
+                <MaterialCommunityIcons
+                  name="file-download-outline"
+                  size={24}
+                  color="#fff"
+                />
               </TouchableOpacity>
+              <View style={styles.attachmentBubbleIndicator} />
             </View>
           </TouchableOpacity>
         </TouchableOpacity>
@@ -254,7 +284,7 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F2F2F2',
   },
   header: {
     flexDirection: 'row',
@@ -306,6 +336,7 @@ const styles = StyleSheet.create({
   menuButton: {
     padding: 4,
     marginLeft: 8,
+
   },
   chatList: {
     flex: 1,
@@ -343,10 +374,9 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-
   },
   otherMessageContent: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'white',
     elevation: 1,
     shadowColor: '#000',
     shadowOffset: {
@@ -363,15 +393,15 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     padding: 8,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F2F2F2',
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F2F2F2',
-    borderRadius: 24,
+    borderRadius: 10,
     paddingHorizontal: 16,
-    height: 48,
+    height: 45,
+    backgroundColor: '#FFFFFF', 
   },
   input: {
     flex: 1,
@@ -380,6 +410,7 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     marginLeft: 8,
+    marginRight: 8,
   },
   attachmentIcon: {
     marginHorizontal: 8,
@@ -465,12 +496,35 @@ const styles = StyleSheet.create({
     right: 16,
     zIndex: 1000,
   },
+  menuSeparator: {
+    height: 1,
+    backgroundColor: '#E5E5E5',
+    marginHorizontal: -8,
+  },
   attachmentBubble: {
     flexDirection: 'row',
     backgroundColor: '#006B06',
     borderRadius: 30,
     padding: 16,
     gap: 4,
+    position: 'relative', // Add this
+  },
+
+  // Add this new style
+  attachmentBubbleIndicator: {
+    position: 'absolute',
+    bottom: -10,
+    right: 55,
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderTopWidth: 12,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#006B06',
   },
 });
 
