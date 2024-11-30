@@ -70,6 +70,9 @@ type Chat = {
 };
 
 function App(): React.JSX.Element {
+
+ // console.log('App');
+
   const [chatData, setChatData] = useState<ChatResponse | null>(null);
   const [showMenu, setShowMenu] = useState(false);
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
@@ -401,7 +404,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 16,
     height: 45,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
   },
   input: {
     flex: 1,
