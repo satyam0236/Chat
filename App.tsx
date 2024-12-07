@@ -71,7 +71,7 @@ type Chat = {
 
 function App(): React.JSX.Element {
 
- // console.log('App');
+ // console.log('Chat App UI');
 
   const [chatData, setChatData] = useState<ChatResponse | null>(null);
   const [showMenu, setShowMenu] = useState(false);
